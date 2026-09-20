@@ -31,7 +31,7 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p public/data
-          curl -L --retry 3 --fail             "https://raw.githubusercontent.com/tawfek/Iraqi-Cities-and-Districts-data/master/data/geoBoundaries-IRQ-ADM1_simplified.geojson"             -o public/data/iraq-governorates.geojson
+          curl -L --retry 3 --fail "https://raw.githubusercontent.com/tawfek/Iraqi-Cities-and-Districts-data/master/data/geoBoundaries-IRQ-ADM1_simplified.geojson" -o public/data/iraq-governorates.geojson
           cat > public/data/IRAQ_BOUNDARIES_ATTRIBUTION.md <<'EOF'
           # Iraq governorate boundaries attribution
 
@@ -41,11 +41,11 @@ jobs:
           Changes: vendored into this repository for the interactive Iraq governorate map.
           EOF
 
-      - name: Remove one-time bootstrap material
+      - name: Keep this bootstrap push outside workflow permissions
         shell: bash
         run: |
           rm -rf .bootstrap
-          rm -f .github/workflows/bootstrap.yml
+          rm -f .github/workflows/ci.yml .github/workflows/data-refresh.yml
 
       - name: Commit application foundation
         shell: bash
