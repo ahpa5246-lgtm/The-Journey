@@ -1,0 +1,22 @@
+{
+  "sources": [
+    {
+      "id": "unesco-iraq",
+      "label": "UNESCO World Heritage Centre — Iraq",
+      "url": "https://whc.unesco.org/en/statesparties/iq",
+      "type": "heritage"
+    },
+    {
+      "id": "iraq-evisa",
+      "label": "Iraqi Electronic Visa — Ministry of Interior",
+      "url": "https://evisa.iq/en",
+      "type": "entry"
+    },
+    {
+      "id": "iraq-evisa-instructions",
+      "label": "Iraqi Electronic Visa — visa requirements",
+      "url": "https://evisa.iq/en/Instructions",
+      "type": "entry"
+    }
+  ]
+}
