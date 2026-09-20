@@ -1,0 +1,39 @@
+name: Refresh tourism candidates
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 3 * * 1,4"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: journey-data-refresh
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Refresh OpenStreetMap candidate queue
+        run: node scripts/refresh-osm.mjs
+      - name: Check official source availability
+        run: node scripts/check-official-sources.mjs
+      - name: Commit data changes
+        shell: bash
+        run: |
+          if git diff --quiet -- public/data/osm-candidates.json public/data/source-health.json; then
+            echo "No data changes"
+            exit 0
+          fi
+          git config user.name "the-journey-data-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/data/osm-candidates.json public/data/source-health.json
+          git commit -m "data: refresh tourism candidate queue"
+          git push
