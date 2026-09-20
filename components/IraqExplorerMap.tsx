@@ -74,7 +74,7 @@ export default function IraqExplorerMap({ locale, places }: { locale: Locale; pl
           interactiveLayerIds={["iraq-fill"]}
           onClick={handleClick}
           cursor="pointer"
-          attributionControl
+          attributionControl={{ compact: true }}
         >
           <Source id="iraq-governorates" type="geojson" data={IRAQ_GEOJSON_URL}>
             <Layer
