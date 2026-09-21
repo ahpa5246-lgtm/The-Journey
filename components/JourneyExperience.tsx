@@ -291,7 +291,7 @@ export default function JourneyExperience() {
                 <div className="place-card-meta"><span>{String(index + 1).padStart(2, "0")}</span><BadgeCheck size={17} /></div>
                 <h3>{place.name[locale]}</h3>
                 <p>{place.summary[locale]}</p>
-                <a href={place.sourceUrl} target="_blank" rel="noreferrer">{place.sourceLabel}</a>
+                <a href={place.sourceUrl} target="_blank" rel="noopener noreferrer">{place.sourceLabel}</a>
               </div>
             </article>
           ))}
@@ -326,7 +326,7 @@ export default function JourneyExperience() {
                 <h3>{isArabic ? item.ar : item.en}</h3>
                 <p>{isArabic ? item.noteAr : item.noteEn}</p>
                 {"href" in item && item.href ? (
-                  <a className="essential-link" href={item.href} target="_blank" rel="noreferrer">
+                  <a className="essential-link" href={item.href} target="_blank" rel="noopener noreferrer">
                     {isArabic ? item.ctaAr : item.ctaEn}
                   </a>
                 ) : null}
@@ -394,7 +394,7 @@ export default function JourneyExperience() {
           </div>
           <div className="planner-results">
             {recommended.map((place) => (
-              <a key={place.id} href={place.sourceUrl} target="_blank" rel="noreferrer">
+              <a key={place.id} href={place.sourceUrl} target="_blank" rel="noopener noreferrer">
                 <strong>{place.name[locale]}</strong>
                 <span>{place.governorate}</span>
               </a>
