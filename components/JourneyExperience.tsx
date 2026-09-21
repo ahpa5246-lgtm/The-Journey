@@ -87,6 +87,17 @@ const creatorCards = [
   },
 ];
 
+function categoryLabel(category: Place["category"], locale: Locale) {
+  const labels = {
+    heritage: { en: "Heritage", ar: "تراث" },
+    nature: { en: "Nature", ar: "طبيعة" },
+    food: { en: "Food", ar: "مطاعم" },
+    stay: { en: "Stay", ar: "إقامة" },
+    culture: { en: "Culture", ar: "ثقافة" },
+  } as const;
+  return labels[category][locale];
+}
+
 function PlaceArtwork({ place }: { place: Place }) {
   const kind = place.id === "ahwar" ? "marsh" : place.id === "erbil-citadel" ? "citadel" : "ziggurat";
   return (
@@ -103,11 +114,25 @@ function IntroSequence({ onFinish }: { onFinish: () => void }) {
   const [stage, setStage] = useState<"splash" | "map" | "triptych">("splash");
   const locked = useRef(false);
   const touchStart = useRef<number | null>(null);
+  const skipRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     const timer = window.setTimeout(() => setStage("map"), 1750);
-    return () => window.clearTimeout(timer);
-  }, []);
+    skipRef.current?.focus();
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    function onKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape") onFinish();
+    }
+
+    window.addEventListener("keydown", onKeyDown);
+    return () => {
+      window.clearTimeout(timer);
+      window.removeEventListener("keydown", onKeyDown);
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [onFinish]);
 
   function move(direction: 1 | -1) {
     if (locked.current || stage === "splash") return;
@@ -125,6 +150,7 @@ function IntroSequence({ onFinish }: { onFinish: () => void }) {
     <div
       className={`intro-overlay stage-${stage}`}
       role="dialog"
+      aria-modal="true"
       aria-label="The Journey introduction"
       onWheel={(event) => {
         if (Math.abs(event.deltaY) > 18) move(event.deltaY > 0 ? 1 : -1);
@@ -140,7 +166,7 @@ function IntroSequence({ onFinish }: { onFinish: () => void }) {
         if (Math.abs(delta) > 42) move(delta > 0 ? 1 : -1);
       }}
     >
-      <button className="intro-skip" type="button" onClick={onFinish}>
+      <button ref={skipRef} className="intro-skip" type="button" onClick={onFinish}>
         Skip intro
       </button>
 
@@ -234,12 +260,12 @@ export default function JourneyExperience() {
       {intro === null ? <div className="intro-pending" /> : null}
       {intro ? <IntroSequence onFinish={finishIntro} /> : null}
 
-      <header className="topbar">
-        <a className="brand" href="#top" aria-label="The Journey home">
+      <header className="topbar" id="top">
+        <a className="brand" href="#top" aria-label={isArabic ? "العودة إلى الصفحة الرئيسية" : "The Journey home"}>
           <span className="brand-mark"><MapPinned size={20} /></span>
           <span>{t.brand}</span>
         </a>
-        <nav aria-label="Primary navigation">
+        <nav aria-label={isArabic ? "التنقل الرئيسي" : "Primary navigation"}>
           <a href="#discover">{t.nav.discover}</a>
           <a href="#map" className="map-nav-link">{t.nav.map}</a>
           <a href="#creators">{t.nav.creators}</a>
@@ -253,7 +279,7 @@ export default function JourneyExperience() {
       <section className="hero" id="top">
         <div className="hero-map-ghost" aria-hidden="true"><div className="hero-iraq-shape" /><span>IRAQ</span></div>
         <div className="hero-copy">
-          <div className="audience-switch" role="group" aria-label="Choose experience">
+          <div className="audience-switch" role="group" aria-label={isArabic ? "اختر تجربة الاستخدام" : "Choose experience"}>
             <button className={audience === "visitor" ? "is-active" : ""} onClick={() => setAudience("visitor")} type="button">
               {t.visitor}
             </button>
@@ -288,7 +314,14 @@ export default function JourneyExperience() {
             <article className="place-card" key={place.id}>
               <PlaceArtwork place={place} />
               <div className="place-card-body">
-                <div className="place-card-meta"><span>{String(index + 1).padStart(2, "0")}</span><BadgeCheck size={17} /></div>
+                <div className="place-card-meta">
+                  <span>{String(index + 1).padStart(2, "0")}</span>
+                  <span className="place-card-trust"><BadgeCheck size={15} /> {isArabic ? "موثّق" : "Verified"}</span>
+                </div>
+                <div className="place-card-details">
+                  <span>{place.governorate}</span>
+                  <span>{categoryLabel(place.category, locale)}</span>
+                </div>
                 <h3>{place.name[locale]}</h3>
                 <p>{place.summary[locale]}</p>
                 <a href={place.sourceUrl} target="_blank" rel="noreferrer">{place.sourceLabel}</a>
