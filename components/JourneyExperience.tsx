@@ -111,21 +111,14 @@ function PlaceArtwork({ place }: { place: Place }) {
 }
 
 function IntroSequence({ onFinish }: { onFinish: () => void }) {
-  const [stage, setStage] = useState<"splash" | "map" | "triptych">("splash");
-  const locked = useRef(false);
-  const touchStart = useRef<number | null>(null);
   const skipRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
-    const timer = window.setTimeout(() => setStage("map"), 1750);
     skipRef.current?.focus();
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
-
-    function onKeyDown(event: KeyboardEvent) {
-      if (event.key === "Escape") onFinish();
-    }
-
+    const timer = window.setTimeout(onFinish, 3800);
+    const onKeyDown = (event: KeyboardEvent) => { if (event.key === "Escape") onFinish(); };
     window.addEventListener("keydown", onKeyDown);
     return () => {
       window.clearTimeout(timer);
@@ -134,63 +127,22 @@ function IntroSequence({ onFinish }: { onFinish: () => void }) {
     };
   }, [onFinish]);
 
-  function move(direction: 1 | -1) {
-    if (locked.current || stage === "splash") return;
-    locked.current = true;
-    window.setTimeout(() => {
-      locked.current = false;
-    }, 650);
-
-    if (direction > 0 && stage === "map") setStage("triptych");
-    else if (direction > 0 && stage === "triptych") onFinish();
-    else if (direction < 0 && stage === "triptych") setStage("map");
-  }
-
   return (
-    <div
-      className={`intro-overlay stage-${stage}`}
-      role="dialog"
-      aria-modal="true"
-      aria-label="The Journey introduction"
-      onWheel={(event) => {
-        if (Math.abs(event.deltaY) > 18) move(event.deltaY > 0 ? 1 : -1);
-      }}
-      onTouchStart={(event) => {
-        touchStart.current = event.touches[0]?.clientY ?? null;
-      }}
-      onTouchEnd={(event) => {
-        if (touchStart.current == null) return;
-        const end = event.changedTouches[0]?.clientY ?? touchStart.current;
-        const delta = touchStart.current - end;
-        touchStart.current = null;
-        if (Math.abs(delta) > 42) move(delta > 0 ? 1 : -1);
-      }}
-    >
-      <button ref={skipRef} className="intro-skip" type="button" onClick={onFinish}>
-        Skip intro
-      </button>
-
-      <section className="intro-title-lockup" aria-hidden={stage !== "splash"}>
-        <p>THE JOURNEY</p>
-        <span>The journey feels different here.</span>
-      </section>
-
-      <section className="intro-map-scene" aria-hidden={stage !== "map"}>
-        <IntroMapScene locale="en" places={places} />
-        <button className="intro-continue" type="button" onClick={() => move(1)}>
-          Scroll to continue <ArrowDown size={17} />
-        </button>
-      </section>
-
-      <section className="intro-triptych" aria-hidden={stage !== "triptych"}>
-        <div className="intro-panel heritage"><span>Heritage</span></div>
-        <div className="intro-panel stay"><span>Stay</span></div>
-        <div className="intro-panel taste"><span>Taste</span></div>
-        <strong>THE JOURNEY FEELS DIFFERENT HERE</strong>
-        <button className="intro-enter" type="button" onClick={onFinish}>
-          Enter The Journey <ArrowDown size={17} />
-        </button>
-      </section>
+    <div className="cinematic-intro" role="dialog" aria-modal="true" aria-label="The Journey introduction">
+      <div className="cinematic-grain" />
+      <div className="cinematic-horizon" />
+      <div className="cinematic-sun" />
+      <div className="cinematic-monument monument-one" />
+      <div className="cinematic-monument monument-two" />
+      <div className="cinematic-reeds" />
+      <div className="cinematic-title">
+        <span>IRAQ · MESOPOTAMIA</span>
+        <strong>THE JOURNEY</strong>
+        <p>Where every place carries a story.</p>
+      </div>
+      <div className="cinematic-curtain curtain-left" />
+      <div className="cinematic-curtain curtain-right" />
+      <button ref={skipRef} className="intro-skip" type="button" onClick={onFinish}>Skip</button>
     </div>
   );
 }
@@ -311,7 +263,7 @@ export default function JourneyExperience() {
         </div>
         <div className="rail" aria-label="Featured places">
           {places.filter((p) => p.featured).map((place, index) => (
-            <article className="place-card" key={place.id}>
+            <article className="place-card" key={place.id} onClick={() => { window.location.href = `/places/${place.id}`; }} role="link" tabIndex={0} onKeyDown={(e) => { if (e.key === "Enter") window.location.href = `/places/${place.id}`; }}>
               <PlaceArtwork place={place} />
               <div className="place-card-body">
                 <div className="place-card-meta">
@@ -324,7 +276,7 @@ export default function JourneyExperience() {
                 </div>
                 <h3>{place.name[locale]}</h3>
                 <p>{place.summary[locale]}</p>
-                <a href={place.sourceUrl} target="_blank" rel="noopener noreferrer">{place.sourceLabel}</a>
+                <span className="place-source">{isArabic ? "افتح صفحة المكان" : "Open place story"} →</span>
               </div>
             </article>
           ))}
