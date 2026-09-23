@@ -160,12 +160,7 @@ export default function JourneyExperience() {
   });
 
   useEffect(() => {
-    const seen = window.localStorage.getItem("journey-intro-seen") === "1";
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (seen || reduced) {
-      setIntro(false);
-      return;
-    }
+    // Preview mode: always show the intro so its animation can be reviewed on every refresh.
     setIntro(true);
   }, []);
 
