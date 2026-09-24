@@ -382,3 +382,274 @@ footer p { margin: 0; max-width: 470px; text-align: end; }
 .similar-section{padding:100px 5vw 120px;background:#0b0e0b}.similar-heading span{font-size:.7rem;letter-spacing:.24em;color:#d6c4a3}.similar-heading h2{font-family:var(--font-display),Georgia,serif;font-size:clamp(3rem,6vw,6rem);margin:10px 0 42px}.similar-rail{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(270px,32vw);gap:14px;overflow-x:auto;padding-bottom:18px}.similar-card{position:relative;height:430px;padding:24px;display:flex;flex-direction:column;justify-content:space-between;text-decoration:none;overflow:hidden;background:linear-gradient(150deg,#34463d,#9a7657);transition:transform .35s ease}.similar-card:hover{transform:scale(.985)}.similar-card:after{content:"";position:absolute;inset:35% -10% -10%;background:#18140f;clip-path:polygon(0 100%,0 68%,18% 68%,18% 45%,37% 45%,37% 25%,56% 25%,56% 53%,76% 53%,76% 70%,100% 70%,100% 100%);opacity:.82}.similar-card>span,.similar-card>div{position:relative;z-index:2}.similar-card h3{font-family:var(--font-display),Georgia,serif;font-size:2.2rem;margin:0}.similar-card p{text-transform:uppercase;letter-spacing:.16em;font-size:.65rem;color:#d6c4a3}
 @media(max-width:700px){.place-story{grid-template-columns:1fr;padding:80px 6vw}.place-story aside{display:none}.similar-rail{grid-auto-columns:82vw}.place-detail-title h1{font-size:clamp(4rem,19vw,7rem)}.cinematic-title strong{font-size:17vw}}
 @media(prefers-reduced-motion:reduce){.cinematic-intro *{animation-duration:.01ms!important;animation-delay:0ms!important}}
+
+
+/* The Journey — refined Grainient identity */
+:root {
+  --night: #050806;
+  --night-soft: #0a0e0b;
+  --marsh: #183027;
+  --marsh-2: #31483b;
+  --sand: #d8c9a5;
+  --sand-soft: #eee3cf;
+  --paper: #f5eee1;
+  --red: #9b7048;
+  --ink: #f5eee1;
+  --muted: #a9a093;
+  --line: rgba(216, 201, 165, 0.18);
+  --focus: #d8c9a5;
+}
+
+html,
+body {
+  background: #050806;
+}
+
+.grainient-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  background: #050806;
+}
+
+.grainient-webgl,
+.grainient-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.grainient-canvas {
+  display: block;
+}
+
+.grainient-veil {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 18% 12%, rgba(216, 201, 165, 0.06), transparent 30%),
+    radial-gradient(circle at 78% 74%, rgba(183, 157, 79, 0.08), transparent 34%),
+    linear-gradient(180deg, rgba(2, 4, 3, 0.18), rgba(2, 4, 3, 0.42));
+}
+
+.site,
+.place-page {
+  position: relative;
+  z-index: 1;
+  background: transparent;
+}
+
+.topbar {
+  background: rgba(5, 8, 6, 0.58);
+  border-bottom-color: rgba(216, 201, 165, 0.13);
+  backdrop-filter: blur(22px) saturate(115%);
+}
+
+.hero {
+  background: transparent;
+}
+
+.hero::before {
+  opacity: 0.055;
+}
+
+.hero-map-ghost {
+  opacity: 0.56;
+}
+
+.hero-iraq-shape {
+  background: linear-gradient(145deg, rgba(49, 72, 59, 0.72), rgba(5, 8, 6, 0.55) 72%);
+  border-color: rgba(216, 201, 165, 0.2);
+  box-shadow: 0 0 140px rgba(183, 157, 79, 0.08);
+}
+
+.section {
+  background: rgba(5, 9, 7, 0.52);
+  color: var(--paper);
+  backdrop-filter: blur(18px) saturate(92%);
+}
+
+.section + .section {
+  border-top-color: rgba(216, 201, 165, 0.12);
+}
+
+.section-heading > span,
+.planner-copy > span {
+  color: rgba(245, 238, 225, 0.62);
+}
+
+.section-heading p,
+.planner-copy > p {
+  color: #c7aa69;
+}
+
+.map-section {
+  background: rgba(3, 6, 4, 0.64);
+}
+
+.essentials-section {
+  background: rgba(11, 15, 11, 0.57);
+}
+
+.planner-section {
+  background: rgba(5, 9, 7, 0.49);
+}
+
+.creators-section {
+  background: rgba(4, 7, 5, 0.61);
+}
+
+.place-card {
+  background: rgba(10, 13, 10, 0.76);
+  color: var(--paper);
+  border-color: rgba(216, 201, 165, 0.17);
+  box-shadow: 0 22px 55px rgba(0, 0, 0, 0.13);
+  backdrop-filter: blur(16px);
+}
+
+.place-artwork::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(4, 7, 5, 0.02), rgba(4, 7, 5, 0.18));
+}
+
+.place-card-body {
+  background: linear-gradient(180deg, rgba(11, 14, 11, 0.82), rgba(7, 10, 8, 0.94));
+}
+
+.place-card-meta,
+.place-card-details {
+  color: rgba(216, 201, 165, 0.72);
+}
+
+.place-card h3 {
+  color: var(--paper);
+}
+
+.place-card p {
+  color: rgba(245, 238, 225, 0.61);
+}
+
+.place-source {
+  color: #d0b779;
+}
+
+.map-shell {
+  background: rgba(4, 7, 5, 0.72);
+  border-color: rgba(216, 201, 165, 0.16);
+  backdrop-filter: blur(14px);
+}
+
+.map-panel {
+  background: rgba(7, 12, 9, 0.78);
+}
+
+.essential-card {
+  color: var(--paper);
+}
+
+.essential-card + .essential-card,
+.essentials-grid {
+  border-color: rgba(216, 201, 165, 0.17);
+}
+
+.essential-card svg {
+  color: #c7aa69;
+}
+
+.essential-card p {
+  color: rgba(245, 238, 225, 0.59);
+}
+
+.essential-link {
+  color: #d8c9a5;
+  border-bottom-color: rgba(216, 201, 165, 0.35);
+}
+
+.planner-card {
+  background: rgba(8, 15, 11, 0.73);
+  border: 1px solid rgba(216, 201, 165, 0.16);
+  box-shadow: 0 30px 75px rgba(0, 0, 0, 0.18);
+  backdrop-filter: blur(18px);
+}
+
+.planner-card input,
+.planner-card select {
+  background: rgba(7, 14, 10, 0.78);
+  border-color: rgba(216, 201, 165, 0.18);
+}
+
+.creator-card {
+  background: rgba(8, 12, 9, 0.72);
+  border-color: rgba(216, 201, 165, 0.14);
+  backdrop-filter: blur(15px);
+}
+
+.creator-card p {
+  color: rgba(245, 238, 225, 0.52);
+}
+
+.revenue-strip {
+  background: rgba(77, 59, 36, 0.54);
+  color: #f7efe1;
+  backdrop-filter: blur(18px);
+}
+
+.revenue-strip > div {
+  border-left-color: rgba(216, 201, 165, 0.18);
+}
+
+footer {
+  background: rgba(3, 5, 4, 0.72);
+  border-top-color: rgba(216, 201, 165, 0.13);
+  backdrop-filter: blur(18px);
+}
+
+/* Place detail pages stay in the same material world */
+.place-page {
+  color: var(--paper);
+}
+
+.place-story {
+  background: rgba(7, 10, 8, 0.62);
+  color: var(--paper);
+  backdrop-filter: blur(19px);
+}
+
+.place-story > div > p,
+.place-story aside p,
+.place-facts span {
+  color: rgba(245, 238, 225, 0.59);
+}
+
+.place-facts {
+  border-block-color: rgba(216, 201, 165, 0.16);
+}
+
+.similar-section {
+  background: rgba(3, 6, 4, 0.64);
+  backdrop-filter: blur(16px);
+}
+
+.source-button {
+  color: #d8c9a5;
+  border-bottom-color: rgba(216, 201, 165, 0.38);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .grainient-backdrop {
+    background:
+      radial-gradient(circle at 72% 22%, rgba(183, 157, 79, 0.28), transparent 32%),
+      radial-gradient(circle at 22% 74%, rgba(49, 72, 59, 0.8), transparent 40%),
+      #050806;
+  }
+
+  .grainient-canvas {
+    display: none;
+  }
+}
