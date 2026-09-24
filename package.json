@@ -14,10 +14,10 @@
     "sources:check": "node scripts/check-official-sources.mjs"
   },
   "dependencies": {
-    "gradient-gl": "^2.0.5",
     "lucide-react": "^0.544.0",
     "maplibre-gl": "^5.24.0",
     "next": "16.2.6",
+    "ogl": "^1.0.11",
     "react": "19.2.0",
     "react-dom": "19.2.0",
     "react-map-gl": "^8.1.1"
