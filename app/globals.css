@@ -323,7 +323,7 @@ footer p { margin: 0; max-width: 470px; text-align: end; }
   .rail { grid-auto-columns: 82vw; }
   .map-canvas-wrap, .map-loading { min-height: 430px; }
   .map-panel { padding: 20px; }
-  .essentials-grid, .creator-grid, .revenue-strip { grid-template-columns: 1fr; }
+  .essentials-grid, .creator-grid, .revenue-strip { grid-template-columns: 1fr; }\n  .trust-grid, .business-grid { grid-template-columns: 1fr; }\n  .trust-card, .arabic .trust-card, .trust-card + .trust-card, .arabic .trust-card + .trust-card { min-height: auto; padding: 24px 0; border-left: 0; border-right: 0; border-top: 1px solid rgba(23,24,19,.18); }\n  .trust-card:first-child { border-top: 0; }\n  .arabic .trust-card + .trust-card { border-right: 0; }\n  .trust-note { align-items: flex-start; flex-direction: column; }\n  .business-card { min-height: 260px; }
   .essential-card, .arabic .essential-card, .essential-card + .essential-card, .arabic .essential-card + .essential-card { padding: 24px 0; border-left: 0; border-right: 0; border-top: 1px solid rgba(23,24,19,.18); }
   .essential-card:first-child { border-top: 0; }
   .essential-card h3 { margin-top: 30px; }
