@@ -19,7 +19,6 @@ const fragmentShader = `
 precision highp float;
 
 uniform float uTime;
-uniform vec3 uColor;
 uniform vec3 uResolution;
 uniform vec2 uMouse;
 uniform float uAmplitude;
@@ -41,12 +40,35 @@ void main() {
   }
   d += uTime * 0.5 * uSpeed;
 
-  vec3 col = vec3(
+  vec3 field = vec3(
     cos(uv * vec2(d, a)) * 0.6 + 0.4,
     cos(a + d) * 0.5 + 0.5
   );
 
-  col = cos(col * cos(vec3(d, a, 2.5)) * 0.5 + 0.5) * uColor;
+  field = clamp(
+    cos(field * cos(vec3(d, a, 2.5)) * 0.5 + 0.5) * 0.5 + 0.5,
+    0.0,
+    1.0
+  );
+
+  // The Journey palette: Night, Marsh, Deep Green, Desert Sand.
+  vec3 night = vec3(0.020, 0.031, 0.024);     // #050806
+  vec3 marsh = vec3(0.094, 0.188, 0.153);     // #183027
+  vec3 deepGreen = vec3(0.192, 0.282, 0.231); // #31483B
+  vec3 sand = vec3(0.847, 0.788, 0.647);      // #D8C9A5
+
+  float energy = dot(field, vec3(0.30, 0.50, 0.20));
+  float greenFlow = smoothstep(0.24, 0.88, field.g);
+  float warmHighlight = smoothstep(
+    0.66,
+    0.98,
+    field.r * 0.48 + field.g * 0.34 + field.b * 0.18
+  );
+
+  vec3 col = mix(night, marsh, smoothstep(0.08, 0.72, energy));
+  col = mix(col, deepGreen, greenFlow * 0.72);
+  col = mix(col, sand, warmHighlight * 0.20);
+
   gl_FragColor = vec4(col, 1.0);
 }
 `;
@@ -75,9 +97,6 @@ export default function GrainientBackground() {
       fragment: fragmentShader,
       uniforms: {
         uTime: { value: 0 },
-        // Muted marsh green + warm sand bias; motion is otherwise identical
-        // to React Bits' Iridescence demo.
-        uColor: { value: new Color(0.58, 0.68, 0.56) },
         uResolution: {
           value: new Color(
             gl.canvas.width,
@@ -87,7 +106,8 @@ export default function GrainientBackground() {
         },
         uMouse: { value: mouse },
         uAmplitude: { value: 0.1 },
-        uSpeed: { value: 1.0 },
+        // Slightly calmer than the React Bits demo while preserving its motion.
+        uSpeed: { value: 0.9 },
       },
     });
 
