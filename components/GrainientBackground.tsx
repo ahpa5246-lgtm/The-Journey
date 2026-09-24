@@ -51,23 +51,25 @@ void main() {
     1.0
   );
 
-  // The Journey palette: Night, Marsh, Deep Green, Desert Sand.
-  vec3 night = vec3(0.020, 0.031, 0.024);     // #050806
-  vec3 marsh = vec3(0.094, 0.188, 0.153);     // #183027
-  vec3 deepGreen = vec3(0.192, 0.282, 0.231); // #31483B
-  vec3 sand = vec3(0.847, 0.788, 0.647);      // #D8C9A5
+  // Darker Journey palette: black is dominant; marsh and sand stay as restrained accents.
+  vec3 black = vec3(0.002, 0.004, 0.003);     // near-black
+  vec3 night = vec3(0.010, 0.018, 0.013);     // black-green
+  vec3 marsh = vec3(0.035, 0.090, 0.070);     // deep marsh
+  vec3 deepGreen = vec3(0.075, 0.145, 0.115); // muted green
+  vec3 sand = vec3(0.435, 0.392, 0.305);      // subdued warm accent
 
   float energy = dot(field, vec3(0.30, 0.50, 0.20));
-  float greenFlow = smoothstep(0.24, 0.88, field.g);
+  float greenFlow = smoothstep(0.42, 0.94, field.g);
   float warmHighlight = smoothstep(
-    0.66,
-    0.98,
+    0.84,
+    0.995,
     field.r * 0.48 + field.g * 0.34 + field.b * 0.18
   );
 
-  vec3 col = mix(night, marsh, smoothstep(0.08, 0.72, energy));
-  col = mix(col, deepGreen, greenFlow * 0.72);
-  col = mix(col, sand, warmHighlight * 0.20);
+  vec3 col = mix(black, night, smoothstep(0.18, 0.58, energy));
+  col = mix(col, marsh, smoothstep(0.38, 0.86, energy) * 0.68);
+  col = mix(col, deepGreen, greenFlow * 0.42);
+  col = mix(col, sand, warmHighlight * 0.055);
 
   gl_FragColor = vec4(col, 1.0);
 }
@@ -87,7 +89,7 @@ export default function GrainientBackground() {
     });
 
     const gl = renderer.gl;
-    gl.clearColor(0.02, 0.03, 0.025, 1);
+    gl.clearColor(0.002, 0.004, 0.003, 1);
 
     const geometry = new Triangle(gl);
     const mouse = new Float32Array([0.5, 0.5]);
