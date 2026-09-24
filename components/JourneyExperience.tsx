@@ -6,6 +6,10 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import {
   ArrowDown,
   BadgeCheck,
+  BarChart3,
+  Database,
+  Handshake,
+  ShieldCheck,
   Building2,
   Globe2,
   Hotel,
@@ -400,6 +404,72 @@ export default function JourneyExperience() {
               </a>
             ))}
           </div>
+        </div>
+      </section>
+
+      <section className="section trust-section" id="trust">
+        <div className="section-heading compact">
+          <div>
+            <p>{isArabic ? "من أين تأتي الأماكن؟" : "Where places come from"}</p>
+            <h2>{isArabic ? "نكتشف على نطاق واسع، وننشر بعد المراجعة." : "Discover broadly. Publish carefully."}</h2>
+          </div>
+          <span>{isArabic ? "لا نعتمد على مصدر واحد، ولا نعامل البيانات الخام كحقيقة جاهزة للنشر." : "No single provider is treated as the source of truth, and raw discovery data is never published as verified."}</span>
+        </div>
+        <div className="trust-grid">
+          <article className="trust-card">
+            <Database size={25} />
+            <span>01</span>
+            <h3>{isArabic ? "الاكتشاف" : "Discovery"}</h3>
+            <p>{isArabic ? "OpenStreetMap وOverpass ومصادر مفتوحة أخرى تعطينا قائمة مرشحين واسعة. هذه البيانات تساعدنا على العثور على الأماكن، لكنها لا تمنحها ختم ثقة." : "OpenStreetMap, Overpass and other open sources create a broad candidate queue. They help us find places; they do not make a listing verified."}</p>
+          </article>
+          <article className="trust-card">
+            <ShieldCheck size={25} />
+            <span>02</span>
+            <h3>{isArabic ? "المراجعة" : "Review"}</h3>
+            <p>{isArabic ? "نطابق الاسم والموقع والتصنيف والبيانات المتغيرة مع مصدر رسمي أو مصدر أولي، ثم نحتفظ بحالة المراجعة وتاريخها." : "We check identity, location, category and changing facts against authoritative or first-party sources, then retain review state and date."}</p>
+          </article>
+          <article className="trust-card">
+            <Handshake size={25} />
+            <span>03</span>
+            <h3>{isArabic ? "مطالبة صاحب المكان" : "Owner claim"}</h3>
+            <p>{isArabic ? "يمكن لصاحب المطعم أو الفندق المطالبة بصفحته وتحديث بياناته. الدفع لا يغيّر حالة التوثيق ولا يشتري ترتيباً تحريرياً." : "A restaurant or hotel can claim its listing and update first-party details. Payment never changes verification or buys editorial trust."}</p>
+          </article>
+        </div>
+        <div className="trust-note">
+          <strong>{isArabic ? "القاعدة البسيطة:" : "The rule:"}</strong>
+          <span>{isArabic ? "المصدر يحدد الحقيقة، والمراجعة تحدد ما ننشره، والدفع يشتري خدمة تجارية فقط." : "Sources establish facts, review determines what we publish, and payment buys a commercial service only."}</span>
+        </div>
+      </section>
+
+      <section className="section business-section" id="business">
+        <div className="section-heading compact">
+          <div>
+            <p>{isArabic ? "نموذج العمل" : "Business model"}</p>
+            <h2>{isArabic ? "نربح عندما نخلق قيمة قابلة للقياس." : "We monetize measurable value."}</h2>
+          </div>
+          <span>{isArabic ? "الإدراج الأساسي مجاني. الشركات تدفع مقابل أدوات تجارية واضحة أو عمولة عندما نساعدها على إتمام حجز." : "Basic listings stay free. Businesses pay for clear commercial tools or a commission when we help generate a booking."}</span>
+        </div>
+        <div className="business-grid">
+          <article className="business-card business-main">
+            <div className="business-icon"><BarChart3 size={24} /></div>
+            <p>{isArabic ? "للأعمال" : "For businesses"}</p>
+            <h3>{isArabic ? "صفحة مجانية → ظهور مدفوع → حجوزات قابلة للقياس" : "Free listing → paid visibility → measurable bookings"}</h3>
+            <div className="business-prices">
+              <span><b>Free</b><small>{isArabic ? "إدراج أساسي" : "Basic listing"}</small></span>
+              <span><b>25–50K</b><small>{isArabic ? "د.ع / شهر" : "IQD / month"}</small></span>
+              <span><b>5–10%</b><small>{isArabic ? "عمولة الحجز" : "booking commission"}</small></span>
+            </div>
+          </article>
+          <article className="business-card">
+            <p>{isArabic ? "حملات" : "Campaigns"}</p>
+            <h3>{isArabic ? "مطاعم، فنادق، منتجعات وعلامات تجارية" : "Restaurants, hotels, resorts and brands"}</h3>
+            <span>{isArabic ? "حملات مؤثرين وظهور ممول، مع وسم واضح وعدم خلط الإعلان بالتوثيق." : "Creator campaigns and sponsored placements, clearly labeled and kept separate from verification."}</span>
+          </article>
+          <article className="business-card">
+            <p>{isArabic ? "ما نقيسه" : "What we measure"}</p>
+            <h3>{isArabic ? "زيارة → تواصل → حجز → إيراد" : "Visit → lead → booking → revenue"}</h3>
+            <span>{isArabic ? "الهدف ليس بيع مساحة إعلانية؛ الهدف إثبات أن The Journey تجلب طلباً يمكن للأعمال رؤيته." : "The goal is not to sell ad space; it is to prove that The Journey generates demand businesses can see."}</span>
+          </article>
         </div>
       </section>
 
