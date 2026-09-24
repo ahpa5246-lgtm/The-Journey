@@ -479,7 +479,7 @@ body {
   max-height: 240px;
   background: linear-gradient(90deg, transparent 0%, rgba(16, 43, 35, 0.06) 10%, rgba(26, 69, 56, 0.42) 28%, rgba(49, 72, 59, 0.56) 48%, rgba(216, 196, 163, 0.28) 67%, rgba(155, 112, 72, 0.12) 82%, transparent 100%);
   transform: translateX(-50%) rotate(-12deg) scaleX(1.18) scaleY(0.92);
-  animation: grainientRibbonOne 42s ease-in-out infinite alternate;
+  animation: grainientRibbonOne 25.13s linear infinite alternate;
 }
 
 .ribbon-two {
@@ -491,7 +491,7 @@ body {
   max-height: 190px;
   background: linear-gradient(90deg, transparent 0%, rgba(216, 196, 163, 0.18) 10%, rgba(155, 112, 72, 0.22) 30%, rgba(49, 72, 59, 0.50) 50%, rgba(26, 69, 56, 0.30) 68%, rgba(216, 196, 163, 0.10) 82%, transparent 100%);
   transform: translateX(-50%) rotate(14deg) scaleX(1.06) scaleY(0.90);
-  animation: grainientRibbonTwo 48s ease-in-out infinite alternate;
+  animation: grainientRibbonTwo 25.13s linear infinite alternate;
 }
 
 .ribbon-three {
@@ -503,7 +503,7 @@ body {
   max-height: 210px;
   background: linear-gradient(90deg, transparent 0%, rgba(16, 43, 35, 0.05) 10%, rgba(26, 69, 56, 0.34) 28%, rgba(49, 72, 59, 0.52) 47%, rgba(155, 112, 72, 0.22) 65%, rgba(216, 196, 163, 0.15) 82%, transparent 100%);
   transform: translateX(-50%) rotate(13deg) scaleX(1.12) scaleY(0.88);
-  animation: grainientRibbonThree 54s ease-in-out infinite alternate;
+  animation: grainientRibbonThree 25.13s linear infinite alternate;
 }
 
 .ribbon-four {
@@ -515,7 +515,7 @@ body {
   max-height: 140px;
   background: linear-gradient(90deg, transparent 0%, rgba(216, 196, 163, 0.12) 12%, rgba(155, 112, 72, 0.18) 34%, rgba(49, 72, 59, 0.42) 56%, rgba(26, 69, 56, 0.16) 72%, transparent 100%);
   transform: translateX(-50%) rotate(-21deg) scaleX(1.02) scaleY(0.90);
-  animation: grainientRibbonFour 46s ease-in-out infinite alternate;
+  animation: grainientRibbonFour 25.13s linear infinite alternate;
 }
 
 .grainient-vignette {
