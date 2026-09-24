@@ -413,9 +413,9 @@ body {
   overflow: hidden;
   isolation: isolate;
   background:
-    radial-gradient(circle at 78% 12%, rgba(38, 76, 63, 0.22), transparent 30%),
-    radial-gradient(circle at 18% 82%, rgba(18, 42, 34, 0.18), transparent 34%),
-    linear-gradient(180deg, #040506 0%, #050707 42%, #050806 100%);
+    radial-gradient(circle at 78% 12%, rgba(26, 69, 56, 0.34), transparent 30%),
+    radial-gradient(circle at 18% 82%, rgba(155, 112, 72, 0.11), transparent 34%),
+    linear-gradient(180deg, #030504 0%, #050806 46%, #070806 100%);
 }
 
 .grainient-shadow,
@@ -430,16 +430,16 @@ body {
   z-index: 0;
   background:
     radial-gradient(circle at 12% 18%, rgba(0, 0, 0, 0.68), transparent 24%),
-    radial-gradient(circle at 88% 14%, rgba(8, 18, 14, 0.42), transparent 26%),
+    radial-gradient(circle at 88% 14%, rgba(16, 43, 35, 0.52), transparent 26%),
     radial-gradient(circle at 50% 100%, rgba(0, 0, 0, 0.34), transparent 34%);
 }
 
 .grainient-haze {
   z-index: 1;
   border-radius: 999px;
-  filter: blur(78px);
+  filter: blur(84px);
   mix-blend-mode: screen;
-  opacity: 0.55;
+  opacity: 0.52;
 }
 
 .haze-one {
@@ -447,8 +447,8 @@ body {
   right: -10%;
   width: 56vw;
   height: 56vw;
-  background: radial-gradient(circle, rgba(64, 163, 131, 0.22) 0%, rgba(64, 163, 131, 0.10) 28%, transparent 70%);
-  animation: grainientHazeOne 18s ease-in-out infinite alternate;
+  background: radial-gradient(circle, rgba(49, 72, 59, 0.34) 0%, rgba(26, 69, 56, 0.18) 30%, transparent 72%);
+  animation: grainientHazeOne 52s ease-in-out infinite alternate;
 }
 
 .haze-two {
@@ -456,18 +456,19 @@ body {
   left: -18%;
   width: 58vw;
   height: 58vw;
-  background: radial-gradient(circle, rgba(92, 86, 230, 0.16) 0%, rgba(32, 124, 168, 0.12) 28%, transparent 72%);
-  animation: grainientHazeTwo 22s ease-in-out infinite alternate;
+  background: radial-gradient(circle, rgba(216, 196, 163, 0.16) 0%, rgba(155, 112, 72, 0.10) 30%, transparent 74%);
+  animation: grainientHazeTwo 60s ease-in-out infinite alternate;
 }
 
 .grainient-ribbon {
   z-index: 2;
   left: 50%;
-  border-radius: 999px;
+  border-radius: 48% 52% 56% 44% / 62% 42% 58% 38%;
   transform-origin: center;
-  filter: blur(26px);
+  filter: blur(28px);
   mix-blend-mode: screen;
-  opacity: 0.92;
+  opacity: 0.86;
+  will-change: transform, border-radius;
 }
 
 .ribbon-one {
@@ -476,9 +477,9 @@ body {
   height: 14vw;
   min-height: 150px;
   max-height: 240px;
-  background: linear-gradient(90deg, transparent 0%, rgba(26, 96, 74, 0.03) 10%, rgba(54, 182, 140, 0.22) 28%, rgba(77, 129, 255, 0.16) 46%, rgba(125, 78, 255, 0.50) 60%, rgba(232, 220, 186, 0.22) 78%, transparent 100%);
-  transform: translateX(-50%) rotate(-14deg) scale(1.18);
-  animation: grainientRibbonOne 24s ease-in-out infinite alternate;
+  background: linear-gradient(90deg, transparent 0%, rgba(16, 43, 35, 0.06) 10%, rgba(26, 69, 56, 0.42) 28%, rgba(49, 72, 59, 0.56) 48%, rgba(216, 196, 163, 0.28) 67%, rgba(155, 112, 72, 0.12) 82%, transparent 100%);
+  transform: translateX(-50%) rotate(-12deg) scaleX(1.18) scaleY(0.92);
+  animation: grainientRibbonOne 42s ease-in-out infinite alternate;
 }
 
 .ribbon-two {
@@ -488,9 +489,9 @@ body {
   height: 11vw;
   min-height: 120px;
   max-height: 190px;
-  background: linear-gradient(90deg, transparent 0%, rgba(231, 217, 184, 0.12) 10%, rgba(90, 72, 255, 0.46) 34%, rgba(36, 170, 214, 0.22) 56%, rgba(21, 82, 64, 0.08) 76%, transparent 100%);
-  transform: translateX(-50%) rotate(16deg) scale(1.04);
-  animation: grainientRibbonTwo 21s ease-in-out infinite alternate;
+  background: linear-gradient(90deg, transparent 0%, rgba(216, 196, 163, 0.18) 10%, rgba(155, 112, 72, 0.22) 30%, rgba(49, 72, 59, 0.50) 50%, rgba(26, 69, 56, 0.30) 68%, rgba(216, 196, 163, 0.10) 82%, transparent 100%);
+  transform: translateX(-50%) rotate(14deg) scaleX(1.06) scaleY(0.90);
+  animation: grainientRibbonTwo 48s ease-in-out infinite alternate;
 }
 
 .ribbon-three {
@@ -500,9 +501,9 @@ body {
   height: 13vw;
   min-height: 130px;
   max-height: 210px;
-  background: linear-gradient(90deg, transparent 0%, rgba(36, 141, 108, 0.05) 12%, rgba(65, 118, 255, 0.20) 30%, rgba(161, 77, 255, 0.48) 48%, rgba(73, 190, 180, 0.20) 66%, rgba(216, 201, 165, 0.12) 84%, transparent 100%);
-  transform: translateX(-50%) rotate(15deg) scale(1.1);
-  animation: grainientRibbonThree 26s ease-in-out infinite alternate;
+  background: linear-gradient(90deg, transparent 0%, rgba(16, 43, 35, 0.05) 10%, rgba(26, 69, 56, 0.34) 28%, rgba(49, 72, 59, 0.52) 47%, rgba(155, 112, 72, 0.22) 65%, rgba(216, 196, 163, 0.15) 82%, transparent 100%);
+  transform: translateX(-50%) rotate(13deg) scaleX(1.12) scaleY(0.88);
+  animation: grainientRibbonThree 54s ease-in-out infinite alternate;
 }
 
 .ribbon-four {
@@ -512,9 +513,9 @@ body {
   height: 8vw;
   min-height: 85px;
   max-height: 140px;
-  background: linear-gradient(90deg, transparent 0%, rgba(233, 219, 188, 0.08) 12%, rgba(92, 77, 255, 0.32) 38%, rgba(44, 156, 128, 0.18) 62%, transparent 100%);
-  transform: translateX(-50%) rotate(-24deg);
-  animation: grainientRibbonFour 20s ease-in-out infinite alternate;
+  background: linear-gradient(90deg, transparent 0%, rgba(216, 196, 163, 0.12) 12%, rgba(155, 112, 72, 0.18) 34%, rgba(49, 72, 59, 0.42) 56%, rgba(26, 69, 56, 0.16) 72%, transparent 100%);
+  transform: translateX(-50%) rotate(-21deg) scaleX(1.02) scaleY(0.90);
+  animation: grainientRibbonFour 46s ease-in-out infinite alternate;
 }
 
 .grainient-vignette {
@@ -526,33 +527,73 @@ body {
 }
 
 @keyframes grainientRibbonOne {
-  0% { transform: translateX(-50%) rotate(-14deg) scale(1.18) translateY(0); }
-  100% { transform: translateX(-48%) rotate(-10deg) scale(1.22) translateY(20px); }
+  0% {
+    transform: translateX(-50%) rotate(-12deg) scaleX(1.18) scaleY(0.92) skewX(-1deg);
+    border-radius: 48% 52% 56% 44% / 62% 42% 58% 38%;
+  }
+  50% {
+    transform: translateX(-49.2%) rotate(-10.5deg) scaleX(1.21) scaleY(1.04) skewX(1.3deg);
+    border-radius: 60% 40% 43% 57% / 44% 63% 37% 56%;
+  }
+  100% {
+    transform: translateX(-48.7%) rotate(-11.4deg) scaleX(1.17) scaleY(0.96) skewX(-0.6deg);
+    border-radius: 42% 58% 61% 39% / 58% 36% 64% 42%;
+  }
 }
 
 @keyframes grainientRibbonTwo {
-  0% { transform: translateX(-50%) rotate(16deg) scale(1.04) translateY(0); }
-  100% { transform: translateX(-52%) rotate(20deg) scale(1.08) translateY(-18px); }
+  0% {
+    transform: translateX(-50%) rotate(14deg) scaleX(1.06) scaleY(0.90) skewX(1deg);
+    border-radius: 55% 45% 41% 59% / 39% 58% 42% 61%;
+  }
+  50% {
+    transform: translateX(-50.8%) rotate(15.6deg) scaleX(1.02) scaleY(1.05) skewX(-1.2deg);
+    border-radius: 43% 57% 60% 40% / 61% 41% 59% 39%;
+  }
+  100% {
+    transform: translateX(-51.3%) rotate(14.8deg) scaleX(1.08) scaleY(0.94) skewX(0.5deg);
+    border-radius: 62% 38% 47% 53% / 46% 64% 36% 54%;
+  }
 }
 
 @keyframes grainientRibbonThree {
-  0% { transform: translateX(-50%) rotate(15deg) scale(1.10) translateY(0); }
-  100% { transform: translateX(-47%) rotate(11deg) scale(1.15) translateY(-16px); }
+  0% {
+    transform: translateX(-50%) rotate(13deg) scaleX(1.12) scaleY(0.88) skewX(-0.8deg);
+    border-radius: 46% 54% 63% 37% / 57% 35% 65% 43%;
+  }
+  50% {
+    transform: translateX(-49.2%) rotate(11.8deg) scaleX(1.16) scaleY(1.03) skewX(1.1deg);
+    border-radius: 61% 39% 45% 55% / 42% 61% 39% 58%;
+  }
+  100% {
+    transform: translateX(-48.4%) rotate(12.5deg) scaleX(1.11) scaleY(0.93) skewX(-0.4deg);
+    border-radius: 39% 61% 56% 44% / 64% 44% 56% 36%;
+  }
 }
 
 @keyframes grainientRibbonFour {
-  0% { transform: translateX(-50%) rotate(-24deg) translateY(0); }
-  100% { transform: translateX(-48%) rotate(-20deg) translateY(14px); }
+  0% {
+    transform: translateX(-50%) rotate(-21deg) scaleX(1.02) scaleY(0.90) skewX(0.9deg);
+    border-radius: 58% 42% 48% 52% / 43% 62% 38% 57%;
+  }
+  50% {
+    transform: translateX(-49.4%) rotate(-19.8deg) scaleX(1.08) scaleY(1.04) skewX(-1deg);
+    border-radius: 42% 58% 62% 38% / 60% 40% 60% 40%;
+  }
+  100% {
+    transform: translateX(-48.9%) rotate(-20.6deg) scaleX(1.03) scaleY(0.95) skewX(0.4deg);
+    border-radius: 63% 37% 44% 56% / 50% 65% 35% 50%;
+  }
 }
 
 @keyframes grainientHazeOne {
   0% { transform: translate3d(0, 0, 0) scale(1); }
-  100% { transform: translate3d(-18px, 12px, 0) scale(1.08); }
+  100% { transform: translate3d(-10px, 8px, 0) scale(1.035); }
 }
 
 @keyframes grainientHazeTwo {
   0% { transform: translate3d(0, 0, 0) scale(1); }
-  100% { transform: translate3d(18px, -12px, 0) scale(1.06); }
+  100% { transform: translate3d(12px, -8px, 0) scale(1.03); }
 }
 
 .site,
@@ -764,8 +805,8 @@ footer {
 @media (prefers-reduced-motion: reduce) {
   .grainient-backdrop {
     background:
-      radial-gradient(circle at 72% 22%, rgba(72, 118, 100, 0.28), transparent 32%),
-      radial-gradient(circle at 22% 74%, rgba(74, 70, 150, 0.18), transparent 40%),
+      radial-gradient(circle at 72% 22%, rgba(49, 72, 59, 0.34), transparent 32%),
+      radial-gradient(circle at 22% 74%, rgba(155, 112, 72, 0.12), transparent 40%),
       #050806;
   }
 
