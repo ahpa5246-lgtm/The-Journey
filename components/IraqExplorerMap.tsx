@@ -135,7 +135,7 @@ export default function IraqExplorerMap({ locale, places }: { locale: Locale; pl
         <div className="map-results" aria-live="polite">
           {filtered.length ? (
             filtered.slice(0, 6).map((place) => (
-              <a className="map-result" href={place.sourceUrl} target="_blank" rel="noreferrer" key={place.id}>
+              <a className="map-result" href={place.sourceUrl} target="_blank" rel="noopener noreferrer" key={place.id}>
                 <span>{place.name[locale]}</span>
                 <small>{place.sourceLabel}</small>
               </a>
