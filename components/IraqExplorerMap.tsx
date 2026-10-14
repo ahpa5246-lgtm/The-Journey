@@ -38,6 +38,7 @@ const labels: Record<Locale, Record<"all" | PlaceCategory, string>> = {
 };
 
 export default function IraqExplorerMap({ locale, places }: { locale: Locale; places: Place[] }) {
+  const [mapFailed, setMapFailed] = useState(false);
   const [selectedGovernorate, setSelectedGovernorate] = useState<string | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<"all" | PlaceCategory>("all");
   const [popup, setPopup] = useState<{ lng: number; lat: number; name: string } | null>(null);
@@ -73,6 +74,7 @@ export default function IraqExplorerMap({ locale, places }: { locale: Locale; pl
           mapStyle="https://tiles.openfreemap.org/styles/fiord"
           interactiveLayerIds={["iraq-fill"]}
           onClick={handleClick}
+          onError={() => setMapFailed(true)}
           cursor="pointer"
           attributionControl={{ compact: true }}
         >
@@ -116,6 +118,13 @@ export default function IraqExplorerMap({ locale, places }: { locale: Locale; pl
       </div>
 
       <aside className="map-panel">
+        {mapFailed ? <p role="status">{locale === "en" ? "Map unavailable. Browse the catalogue using the filters below." : "تعذر تحميل الخريطة. تصفح الأماكن باستخدام الفلاتر أدناه."}</p> : null}
+        <label>{locale === "en" ? "Governorate / region" : "المحافظة / المنطقة"}
+          <select value={selectedGovernorate ?? ""} onChange={(event) => { setSelectedGovernorate(event.target.value || null); setPopup(null); }}>
+            <option value="">{locale === "en" ? "All Iraq" : "كل العراق"}</option>
+            {[...new Set(places.map(place => place.governorate))].sort().map(name => <option key={name} value={name}>{name}</option>)}
+          </select>
+        </label>
         <div className="map-panel-heading">
           <p>{selectedGovernorate ?? (locale === "en" ? "All Iraq" : "كل العراق")}</p>
           <span>{currentCount}</span>
@@ -124,6 +133,7 @@ export default function IraqExplorerMap({ locale, places }: { locale: Locale; pl
           {(Object.keys(labels[locale]) as Array<"all" | PlaceCategory>).map((category) => (
             <button
               key={category}
+              aria-pressed={selectedCategory === category}
               className={selectedCategory === category ? "filter-chip is-active" : "filter-chip"}
               onClick={() => setSelectedCategory(category)}
               type="button"
