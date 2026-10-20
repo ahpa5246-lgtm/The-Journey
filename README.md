@@ -71,3 +71,26 @@ See [`docs/PRODUCT_ARCHITECTURE.md`](docs/PRODUCT_ARCHITECTURE.md) for the produ
 ## Visual-content note
 
 The first code pass uses designed illustration placeholders for the cinematic triptych. Replace them with Iraq-specific photography only when the team has a clear license/permission and attribution record for each image.
+
+## Publication and verification
+
+Use Node 24 and `npm ci` for reproducible installs. A lockfile is committed.
+
+```bash
+npm ci
+npm run typecheck
+npm run build
+npx playwright install --with-deps chromium
+npm run test:e2e
+npm start -- --hostname 0.0.0.0
+```
+
+`render.yaml` defines a Node web service with a health check at `/api/health`.
+For an existing Render service set build to `npm ci && npm run build`, start to
+`npm start -- --hostname 0.0.0.0` and Node to 24. No application secrets are required.
+The map requires access to OpenFreeMap; the catalogue filters remain available when tiles fail.
+
+The current release is a read-only catalogue: creator trails and commercial services are labeled
+previews. The finder matches interest, and does not calculate prices or group suitability.
+See [publication contract and operations](docs/RELEASE_READINESS.md) and
+[release evidence](docs/RELEASE_EVIDENCE.md) for checks and limitations.

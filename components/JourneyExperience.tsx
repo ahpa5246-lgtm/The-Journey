@@ -130,6 +130,16 @@ function IntroSequence({ onFinish }: { onFinish: () => void }) {
       className={`intro-overlay stage-${stage}`}
       role="dialog"
       aria-label="The Journey introduction"
+      aria-modal="true"
+      onKeyDown={(event) => {
+        if (event.key === "Escape") onFinish();
+        if (event.key === "Tab") {
+          const buttons = Array.from(event.currentTarget.querySelectorAll<HTMLButtonElement>("button")).filter(button => !button.closest("[inert]"));
+          const first = buttons[0], last = buttons[buttons.length - 1];
+          if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus(); }
+          else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
+        }
+      }}
       onWheel={(event) => {
         if (Math.abs(event.deltaY) > 18) move(event.deltaY > 0 ? 1 : -1);
       }}
@@ -144,7 +154,7 @@ function IntroSequence({ onFinish }: { onFinish: () => void }) {
         if (Math.abs(delta) > 42) move(delta > 0 ? 1 : -1);
       }}
     >
-      <button className="intro-skip" type="button" onClick={onFinish}>
+      <button className="intro-skip" autoFocus type="button" onClick={onFinish}>
         Skip intro
       </button>
 
@@ -153,14 +163,14 @@ function IntroSequence({ onFinish }: { onFinish: () => void }) {
         <span>The journey feels different here.</span>
       </section>
 
-      <section className="intro-map-scene" aria-hidden={stage !== "map"}>
-        <IntroMapScene locale="en" places={places} />
+      <section className="intro-map-scene" aria-hidden={stage !== "map"} inert={stage !== "map"}>
+        {stage === "map" ? <IntroMapScene locale="en" places={places} /> : null}
         <button className="intro-continue" type="button" onClick={() => move(1)}>
           Scroll to continue <ArrowDown size={17} />
         </button>
       </section>
 
-      <section className="intro-triptych" aria-hidden={stage !== "triptych"}>
+      <section className="intro-triptych" aria-hidden={stage !== "triptych"} inert={stage !== "triptych"}>
         <div className="intro-panel heritage"><span>Heritage</span></div>
         <div className="intro-panel stay"><span>Stay</span></div>
         <div className="intro-panel taste"><span>Taste</span></div>
@@ -186,7 +196,8 @@ export default function JourneyExperience() {
   });
 
   useEffect(() => {
-    const seen = window.localStorage.getItem("journey-intro-seen") === "1";
+    let seen = false;
+    try { seen = window.localStorage.getItem("journey-intro-seen") === "1"; } catch { /* Storage may be blocked. */ }
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (seen || reduced) {
       setIntro(false);
@@ -195,9 +206,17 @@ export default function JourneyExperience() {
     setIntro(true);
   }, []);
 
+  useEffect(() => {
+    if (!intro) return;
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => { document.body.style.overflow = previous; };
+  }, [intro]);
+
   function finishIntro() {
-    window.localStorage.setItem("journey-intro-seen", "1");
+    try { window.localStorage.setItem("journey-intro-seen", "1"); } catch { /* Continue without persistence. */ }
     setIntro(false);
+    requestAnimationFrame(() => document.querySelector<HTMLButtonElement>(".language-switch")?.focus());
   }
 
   useEffect(() => {
@@ -207,7 +226,7 @@ export default function JourneyExperience() {
 
 
   function interpretTripQuery() {
-    const q = finder.query.toLowerCase();
+    const q = finder.query.toLowerCase().replace(/[٠-٩]/g, digit => String("٠١٢٣٤٥٦٧٨٩".indexOf(digit)));
     const next = { ...finder };
     const count = q.match(/\b([1-9]|1[0-2])\b/);
     if (count) next.people = Number(count[1]);
@@ -230,14 +249,16 @@ export default function JourneyExperience() {
   const isArabic = locale === "ar";
   const recommended = useMemo(() => {
     const matching = places.filter((place) => place.category === finder.interest);
-    return (matching.length ? matching : places).slice(0, 3);
+    return matching.slice(0, 3);
   }, [finder.interest]);
 
   return (
     <main dir={isArabic ? "rtl" : "ltr"} className={isArabic ? "site arabic" : "site"}>
-      {intro === null ? <div className="intro-pending" /> : null}
+
       {intro ? <IntroSequence onFinish={finishIntro} /> : null}
 
+      <div inert={intro === true}>
+      <a className="skip-link" href="#discover">{isArabic ? "انتقل إلى المحتوى" : "Skip to content"}</a>
       <header className="topbar">
         <a className="brand" href="#top" aria-label="The Journey home">
           <span className="brand-mark"><MapPinned size={20} /></span>
@@ -248,7 +269,7 @@ export default function JourneyExperience() {
           <a href="#map" className="map-nav-link">{t.nav.map}</a>
           <a href="#creators">{t.nav.creators}</a>
         </nav>
-        <button className="language-switch" type="button" onClick={() => setLocale(isArabic ? "en" : "ar")}>
+        <button aria-label={isArabic ? "Switch to English" : "التبديل إلى العربية"} className="language-switch" type="button" onClick={() => setLocale(isArabic ? "en" : "ar")}>
           <Languages size={18} />
           {isArabic ? "EN" : "العربية"}
         </button>
@@ -363,7 +384,7 @@ export default function JourneyExperience() {
           </div>
           <label>
             {isArabic ? "عدد الأشخاص" : "People"}
-            <input min="1" max="12" type="number" value={finder.people} onChange={(e) => setFinder({ ...finder, people: Number(e.target.value) })} />
+            <input min="1" max="12" type="number" value={finder.people} onChange={(e) => setFinder({ ...finder, people: Math.max(1, Math.min(12, Math.round(Number(e.target.value) || 1))) })} />
           </label>
           <label>
             {isArabic ? "نوع المجموعة" : "Group"}
@@ -394,9 +415,10 @@ export default function JourneyExperience() {
             <span>{finder.people} {isArabic ? "أشخاص" : "people"}</span>
             <span>{isArabic ? (finder.party === "family" ? "عائلة" : finder.party === "friends" ? "أصدقاء" : "فرد") : finder.party}</span>
             <span>{isArabic ? (finder.budget === "low" ? "اقتصادية" : finder.budget === "mid" ? "متوسطة" : "مرنة") : `${finder.budget} budget`}</span>
-            <span>{isArabic ? "الاقتراحات الحالية تعتمد فقط على الحقول الموثقة" : "Recommendations only use fields the catalogue can currently source."}</span>
+            <span>{isArabic ? "الاقتراحات حسب الاهتمام فقط؛ العدد والميزانية ملاحظات ولا يحددان السعر أو الملاءمة." : "Suggestions match interest only. Group size and budget are notes, not price or suitability checks."}</span>
           </div>
-          <div className="planner-results">
+          <div className="planner-results" aria-live="polite">
+            {!recommended.length ? <p>{isArabic ? "لا توجد أماكن مراجعة لهذا الاهتمام حالياً. جرّب التراث أو الطبيعة." : "No reviewed places for this interest yet. Try heritage or nature."}</p> : null}
             {recommended.map((place) => (
               <a key={place.id} href={place.sourceUrl} target="_blank" rel="noreferrer">
                 <strong>{place.name[locale]}</strong>
@@ -410,7 +432,7 @@ export default function JourneyExperience() {
       <section className="section trust-section" id="trust">
         <div className="section-heading compact">
           <div>
-            <p>{isArabic ? "من أين تأتي الأماكن؟" : "Where places come from"}</p>
+            <p>{isArabic ? "من أين تأتي الأماكن؟" : "Our publishing approach"}</p>
             <h2>{isArabic ? "نكتشف على نطاق واسع، وننشر بعد المراجعة." : "Discover broadly. Publish carefully."}</h2>
           </div>
           <span>{isArabic ? "لا نعتمد على مصدر واحد، ولا نعامل البيانات الخام كحقيقة جاهزة للنشر." : "No single provider is treated as the source of truth, and raw discovery data is never published as verified."}</span>
@@ -444,7 +466,7 @@ export default function JourneyExperience() {
       <section className="section business-section" id="business">
         <div className="section-heading compact">
           <div>
-            <p>{isArabic ? "نموذج العمل" : "Business model"}</p>
+            <p>{isArabic ? "خدمات مستقبلية غير متاحة حالياً" : "Planned services — not currently available"}</p>
             <h2>{isArabic ? "نربح عندما نخلق قيمة قابلة للقياس." : "We monetize measurable value."}</h2>
           </div>
           <span>{isArabic ? "الإدراج الأساسي مجاني. الشركات تدفع مقابل أدوات تجارية واضحة أو عمولة عندما نساعدها على إتمام حجز." : "Basic listings stay free. Businesses pay for clear commercial tools or a commission when we help generate a booking."}</span>
@@ -476,7 +498,7 @@ export default function JourneyExperience() {
       <section className="section creators-section" id="creators">
         <div className="section-heading">
           <div>
-            <p>{isArabic ? "رحلات المؤثرين" : "Creator trails"}</p>
+            <p>{isArabic ? "رحلات المؤثرين — نماذج تجريبية" : "Creator trails — demo previews"}</p>
             <h2>{t.creatorsTitle}</h2>
           </div>
           <span>{isArabic ? "صانع المحتوى يضيف رابط الفيديو والثامبنايل بنفسه؛ الموقع يرسل الزيارة إلى المصدر الأصلي." : "Creators submit their own links and thumbnails; the click returns traffic to the original platform."}</span>
@@ -520,6 +542,7 @@ export default function JourneyExperience() {
         <div className="brand"><span className="brand-mark"><MapPinned size={20} /></span><span>{t.brand}</span></div>
         <p>{isArabic ? "منصة لاكتشاف العراق القديم والحديث بمصادر أوضح وتجربة أبسط." : "A clearer way to discover ancient and modern Iraq."}</p>
       </footer>
+      </div>
     </main>
   );
 }
