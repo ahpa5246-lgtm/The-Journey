@@ -1,5 +1,32 @@
 # The Journey — الرحلة
 
+## Download, setup and project overview
+
+An Iraq travel discovery web application.
+
+Map-based exploration; destination pages; source checks; data refresh scripts.
+
+![Project workflow illustration](docs/project-overview.svg)
+
+[Download source ZIP](https://github.com/ahpa5246-lgtm/The-Journey/archive/refs/heads/main.zip) · [Changes and branches](https://github.com/ahpa5246-lgtm/The-Journey/branches) · [Verification notes](docs/QUALITY_REVIEW.md)
+
+The ZIP contains source code. Installation steps and external runtime requirements are listed below.
+
+```bash
+git clone https://github.com/ahpa5246-lgtm/The-Journey.git
+cd The-Journey
+```
+
+From the repository directory:
+
+```text
+npm install
+npm run dev
+```
+
+The diagram is a project illustration. Test results and runtime limitations are recorded in [the review](docs/QUALITY_REVIEW.md); it is not a production-readiness certification.
+
+
 An Iraq-first tourism and local discovery platform for international visitors and people living in Iraq.
 
 The product begins with one cinematic first-visit sequence, then becomes a practical bilingual discovery interface: curated heritage, an interactive governorate map, travel essentials, an explainable trip finder and opt-in creator trails.
